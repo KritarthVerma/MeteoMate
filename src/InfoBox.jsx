@@ -6,8 +6,9 @@ import ThunderstormIcon from "@mui/icons-material/Thunderstorm"
 import AcUnitIcon from "@mui/icons-material/AcUnit"
 import WbSunnyIcon from "@mui/icons-material/WbSunny"
 import { CardMedia } from '@mui/material';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
-export default function InfoBox({info}){
+export default function InfoBox({info,notFound}){
     return (<div className="InfoBox">
         <div className='cardContainer'>
             <Card sx={{ 
@@ -24,9 +25,17 @@ export default function InfoBox({info}){
                 alignItems:'center',
                 flexDirection:'column',
                 position:'relative',
-                padding:'0'
+                padding:'0',
                  }}>
-                    {!info.city && ( <><CardMedia 
+                    {notFound && (<><ErrorOutlineOutlinedIcon 
+                        sx={{fontSize:'50px',
+                            opacity:'0.6',
+                            color:'#d3d3d3',
+                            marginBottom:'20px'}}/>
+                    <Typography sx={{width:'75%',color:'#D3D3D3'}}>
+                        Oops! Looks like you entered a invalid location.
+                    </Typography></>)}
+                    {(!notFound && !info.city) && ( <><CardMedia 
                     component="img"
                     image="../Images/WeatherIcons.gif"
                     sx={{margin:'0 auto',
@@ -38,12 +47,12 @@ export default function InfoBox({info}){
                     }}/> <Typography sx={{color:'#D3D3D3'}}>
                         Please enter a location to get weather information!
                         </Typography></>)}
-                {info.city && <CardContent>
+                {(!notFound && info.city) && <CardContent className="custom-scrollbar" sx={{overflowY:'auto'}}>
                     <Typography gutterBottom variant="h5" component="div" sx={{marginTop:'7px',color:'white'}}>
                     {info.city} {info.humidity > 80 ? <ThunderstormIcon sx={{color:'#abdbe3'}}/> : 
                     info.temp > 16 ? <WbSunnyIcon sx={{color:'#e2a783'}}/> : <AcUnitIcon sx={{color:'#abdbe3'}}/>}
                     </Typography>
-                    <Typography variant="body2" sx={{fontSize:'1.2rem', color: '#d3d3d3' }} component={"span"}>
+                    <Typography variant="body2" sx={{fontSize:'1.15rem', color: '#d3d3d3' }} component={"span"}>
                     <div>Temperature - {info.temp}&deg;C</div>
                     <div>Humidity - {info.humidity}</div>
                     <div>Min - {info.tempMin}&deg;C</div>

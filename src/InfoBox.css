@@ -8,3 +8,15 @@
     align-items: center;
 }
 
+.custom-scrollbar {
+    margin-right: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color:rgba(211,211,211,0.5);
+    border-radius: 6px;
+}
